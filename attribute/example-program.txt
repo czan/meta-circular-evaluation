@@ -1,0 +1,14 @@
+@(def event-time    (if rokt.eventdate
+                      (if (<= now (days-before rokt.eventdate 6))
+                        {on @rokt.eventdate}
+                        {on @(day-of-week rokt.eventdate)})
+                      {coming up soon}))
+@(def reminder-time (if rokt.eventdate
+                      (if (<= now (days-before rokt.eventdate 3))
+                        (if (<= now (days-before rokt.eventdate 6))
+                          {on @(days-before rokt.eventdate 3)}
+                          {on @(day-of-week (days-before rokt.eventdate 3))})
+                        {the day before})
+                      {a few days before your event}))
+
+Hi @(or rokt.nickname rokt.firstname {there}), your event is @{@event-time}. We'll send you an email @{@reminder-time} about some parking options for you.
